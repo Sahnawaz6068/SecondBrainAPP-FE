@@ -3,7 +3,7 @@ type Varient="primary"|"secondary"
 
 interface ButtonProp{
     varient:Varient,
-    size:"sm"|"md"|"lg",
+    size:"sm"|"md"|"lg", 
     startIcon?:any,
     endIcon?:any,
     text:String,
