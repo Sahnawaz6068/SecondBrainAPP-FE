@@ -6,12 +6,12 @@ interface ButtonProp {
   startIcon?: any;
   endIcon?: any;
   text: String;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const VarientStyle = {
-  primary: "bg-blue-100 text-purple-800",
-  secondary: "bg-blue-700 text-white",
+  primary: "bg-blue-200 text-purple-800 hover:cursor-pointer hover:bg-blue-300",
+  secondary: "bg-blue-700 text-white hover:cursor-pointer hover:bg-blue-600",
 };
 
 const sizeStyle = {
@@ -20,11 +20,12 @@ const sizeStyle = {
   lg: "pl-4 pr-6 flex py-2 rounded-sm text-sm",
 };
 
+
 export const Button = (props: ButtonProp) => {
   return (
     <div className="mx-2">
-      <button
-        className={`${VarientStyle[props.varient]}  ${sizeStyle[props.size]}`}
+      <button onClick={props.onClick}
+        className={`${VarientStyle[props.varient]}  ${sizeStyle[props.size]} `}
       >
         {props.startIcon ? <div className="pr-2">{props.startIcon}</div> : null}{" "}
         {props.text}
