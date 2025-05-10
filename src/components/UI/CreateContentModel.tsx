@@ -10,7 +10,7 @@ const CreateContentModel = ({ open, onClose }) => {
           <div className="bg-white h-72 w-96 p-4 rounded-md shadow-lg z-60">
             <div className="flex">
               <div className="font-bold px-24">Add new Content  </div>
-            <div className="hover:bg-slate-300 hover:cursor-pointer rounded-sm" onClick={()=>onClose()}><CloseIcon/></div>
+            <div className="hover:bg-slate-300 rounded-sm" onClick={()=>onClose()}><CloseIcon/></div>
             </div>
             <div className="mb-2">
               <div className="font-semibold">Title:</div>

@@ -6,15 +6,17 @@ import { Share } from './icons/Share'
 import Card from './components/UI/Card'
 import CreateContentModel from './components/UI/CreateContentModel'
 import { useState } from 'react'
+import Sidebar from './components/UI/Sidebar'
 function App() {
 const [modelOpen,setModelOpen]=useState(false)
   return (
     <>
+    <Sidebar/>
     <div className='flex justify-end  mr-5 mt-5'>
       <Button  varient="primary" size="lg" startIcon={<Share size="lg"/>} endIcon="lala2" text="Share Brain" onClick={()=>{}}/>
       <Button onOpen={()=>{setModelOpen(true)}} varient="secondary" size="sm" startIcon={<PlusIcon size="md"/>} endIcon="lala2" text="Add Content" onClick={()=>{setModelOpen(true)}}/>
     </div>
-      <div className='flex pt-8'>
+      <div className='flex pt-8 ml-80'>
         <Card title={"Ind vs Pak"} link={"https://x.com/Sofiyaquresi/status/1921116969362694570"} type={"twitter"}/>
         <Card title={"Ind vs Pak"} link={"https://x.com/Sofiyaquresi/status/1921116969362694570"} type={"twitter"}/>
       </div>
