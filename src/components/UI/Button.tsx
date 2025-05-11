@@ -23,7 +23,7 @@ const sizeStyle = {
 
 export const Button = (props: ButtonProp) => {
   return (
-    <div className="mx-2">
+    <div className="mx-2 hover:translate-0.5 duration-75">
       <button onClick={props.onClick}
         className={`${VarientStyle[props.varient]}  ${sizeStyle[props.size]} `}
       >

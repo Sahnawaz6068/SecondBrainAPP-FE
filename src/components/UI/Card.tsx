@@ -8,7 +8,7 @@ interface CardProp {
 
 const Card = ({title,link,type}:CardProp) => {
   return (
-    <div className="px-2 pt-2  hover:transition  duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:bg-indigo-100 ">
+    <div className="px-2 pt-2 hover:cursor-pointer  hover:transition  duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:bg-indigo-100 ">
       <div className="bg-white py-4 px-4 rounded-md shadow-md border-slate-100 border max-w-72 min-h-52 min-w-72 ">
         {/* CARD Header Section */}
         <div className="flex justify-between">
