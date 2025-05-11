@@ -1,5 +1,6 @@
 import CloseIcon from "../../icons/CloseIcon";
 import { Button } from "./Button";
+import Input from "./Input";
 
 //@ts-ignore
 const CreateContentModel = ({ open, onClose }) => {
@@ -14,19 +15,11 @@ const CreateContentModel = ({ open, onClose }) => {
             </div>
             <div className="mb-2">
               <div className="font-semibold">Title:</div>
-              <input
-                className="bg-gray-200 p-2 rounded-md m-2 w-full"
-                type="text"
-                placeholder="Title"
-              />
+              <Input placeholder={"Title"}/>
             </div>
             <div className="mb-4">
               <div className="font-semibold">URL:</div>
-              <input
-                className="bg-gray-200 p-2 rounded-md m-2 w-full"
-                type="text"
-                placeholder="Link"
-              />
+              <Input placeholder={"Url"}/>
             </div>
             <div className="flex justify-end">
               <Button text={"Create"} varient={"secondary"} size={"md"} />
