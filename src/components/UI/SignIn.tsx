@@ -13,10 +13,13 @@ const SignIn = () => {
       const email=Email.current?.value;
       const password=Password.current?.value;
      try{
-       await axios.post(BACKEND_URL+"/login",{
+       const response=await axios.post(BACKEND_URL+"/login",{
         email,
         password
       })
+      console.log(response);
+      const jwt=response.data.token;
+      localStorage.setItem("token",jwt); 
       alert("You are LoggedIn")
      }catch(err:any){
       console.log(err.message)
@@ -26,7 +29,7 @@ const SignIn = () => {
   
   return (
     <div className='w-full h-screen flex justify-center items-center'>
-        <div className='bg-slate-200 max-h-84 w-96  rounded-lg m-8 p-8 hover:translate-0.5 duration-300 hover:scale-105'>
+        <div className='bg-slate-50 shadow-2xl max-h-84 w-96  rounded-lg m-8 p-8 hover:translate-0.5 duration-300 hover:scale-105'>
         <Input referance={Email}  placeholder={"Email"}/>
         <Input referance={Password}  placeholder={"Password"}/>
         <h1 className='pb-2 text-gray-400'>You don't have an account. 

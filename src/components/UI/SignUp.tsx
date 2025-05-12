@@ -18,7 +18,7 @@ const SignUp = () => {
     const password = passwordRef.current?.value;
 
     try {
-      await axios.post("http://localhost:3000/api/v1/signup", {
+      await axios.post(BACKEND_URL+"/signup", {
         firstName,
         lastName,
         email,
@@ -31,7 +31,7 @@ const SignUp = () => {
   }
   return (
     <div className="w-full h-screen flex justify-center items-center ">
-      <div className="bg-slate-200 max-h-96 w-96  rounded-lg m-8 p-8 hover:scale-105  hover:-translate-y-0.5 duration-300">
+      <div className="bg-slate-50 shadow-2xl max-h-96 w-96  rounded-lg m-8 p-8 hover:scale-105  hover:-translate-y-0.5 duration-300">
         <Input referance={FirstName} placeholder={"FirstName"} />
         <Input referance={LastName} placeholder={"LastName"} />
         <Input referance={Email} placeholder={"Email"} />
