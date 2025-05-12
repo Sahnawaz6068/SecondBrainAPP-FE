@@ -1,24 +1,59 @@
-
-import Input from './Input'
-import { Button } from './Button'
+import Input from "./Input";
+import { Button } from "./Button";
+import { useRef } from "react";
+import { BACKEND_URL } from "../../config";
+import axios from "axios";
 
 const SignUp = () => {
-  return (
-    <div className='w-full h-screen flex justify-center items-center'>
-        <div className='bg-gray-200 max-h-96 max-w-96  rounded-lg m-8 p-8 '>
-        <Input  placeholder={"FirstName"}/>
-        <Input placeholder={"LastName"}/>
-        <Input placeholder={"Email"}/>
-        <Input placeholder={"Password"}/>
-        <h1 className='pb-2 text-gray-400'>You have alredy an account. 
-            <a className='text-blue-500' href="#login"> SignIn</a>
-        </h1>
-        <div className='ml-18'>
-            <Button varient={"secondary"} size={"lg"} text={"Signup"}/>
-        </div>
-    </div>
-    </div>
-  )
-}
+  //use ref to fetch data from input box
 
-export default SignUp
+  const FirstName = useRef<HTMLInputElement>(null);
+  const LastName = useRef<HTMLInputElement>(null);
+  const Email = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  async function signupData() {
+    const firstName = FirstName.current?.value;
+    const lastName = LastName.current?.value;
+    const email = Email.current?.value;
+    const password = passwordRef.current?.value;
+
+    try {
+      await axios.post("http://localhost:3000/api/v1/signup", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      alert("You are signUp");
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
+  return (
+    <div className="w-full h-screen flex justify-center items-center ">
+      <div className="bg-slate-200 max-h-96 w-96  rounded-lg m-8 p-8 hover:scale-105  hover:-translate-y-0.5 duration-300">
+        <Input referance={FirstName} placeholder={"FirstName"} />
+        <Input referance={LastName} placeholder={"LastName"} />
+        <Input referance={Email} placeholder={"Email"} />
+        <Input referance={passwordRef} placeholder={"Password"} />
+        <h1 className="pb-2 text-gray-400">
+          You have alredy an account.
+          <a className="text-blue-500" href="#login">
+            {" "}
+            SignIn
+          </a>
+        </h1>
+        <div className="ml-28">
+          <Button
+            onClick={signupData}
+            varient={"secondary"}
+            size={"lg"}
+            text={"Signup"}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignUp;
