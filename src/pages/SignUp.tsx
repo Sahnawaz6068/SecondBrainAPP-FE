@@ -1,8 +1,9 @@
-import Input from "./Input";
-import { Button } from "./Button";
+import Input from "../components/UI/Input";
+import { Button } from "../components/UI/Button";
 import { useRef } from "react";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   //use ref to fetch data from input box
@@ -38,10 +39,10 @@ const SignUp = () => {
         <Input referance={passwordRef} placeholder={"Password"} />
         <h1 className="pb-2 text-gray-400">
           You have alredy an account.
-          <a className="text-blue-500" href="#login">
+          <Link className="text-blue-500" to="/signin">
             {" "}
             SignIn
-          </a>
+          </Link>
         </h1>
         <div className="ml-28">
           <Button

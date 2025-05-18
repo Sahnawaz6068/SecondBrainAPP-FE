@@ -1,8 +1,9 @@
-import Input from "./Input";
-import { Button } from "./Button";
+import Input from "../components/UI/Input";
+import { Button } from "../components/UI/Button";
 import { useRef } from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../config";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const Email = useRef<HTMLInputElement>(null);
@@ -20,6 +21,7 @@ const SignIn = () => {
       console.log(response?.data.token);
       const jwt = response.data.token;
       // localStorage.setItem("token", jwt);
+      localStorage.setItem("token",jwt)
       alert("You are LoggedIn");
     } catch (err: any) {
       console.log(err.message);
@@ -33,10 +35,11 @@ const SignIn = () => {
         <Input referance={Password} placeholder={"Password"} />
         <h1 className="pb-2 text-gray-400">
           You don't have an account.
-          <a className="text-blue-500" href="#SignIn">
+          <Link className="text-blue-500" to="/signup">
             {" "}
             Create account
-          </a>
+          </Link>
+          
         </h1>
         <div className="ml-28">
           <Button
