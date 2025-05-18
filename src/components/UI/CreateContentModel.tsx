@@ -41,7 +41,7 @@ const CreateContentModel = ({ open, onClose }) => {
     <>
       {open && (
         <div className="fixed inset-0 flex justify-center items-center bg-black opacity-85 z-50">
-          <div className="bg-white shadow-2xl h-80 w-96 p-4 rounded-md  z-60">
+          <div className="bg-white shadow-2xl h-80 w-96 p-4 rounded-md  z-60 dark:bg-slate-950">
             <div className="flex">
               <div className="font-bold px-24">Add new Content </div>
               <div

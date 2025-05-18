@@ -8,15 +8,15 @@ interface CardProp {
 
 const Card = ({ title, link, type }: CardProp) => {
   return (
-    <div className="px-2 pt-2 hover:cursor-pointer  hover:transition  duration-400 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:bg-indigo-100 ">
-      <div className="bg-white py-4 px-4 rounded-md shadow-md border-slate-100 border max-w-72 min-h-52 min-w-72 ">
+    <div className="px-2 pt-2 hover:cursor-pointer  hover:transition  duration-400 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:bg-indigo-100 dark:hover:bg-slate-700 ">
+      <div className="bg-white py-4 px-4 rounded-md shadow-md border-slate-100 border max-w-72 min-h-52 min-w-72 dark:bg-slate-900 dark:border-slate-600 ">
         {/* CARD Header Section */}
         <div className="flex justify-between">
           <div className="flex justify-center items-ce4nter ">
             <div className="text-gray-500 pr-4">
               <Share size="lg" />
             </div>
-            <div className="font-semibold">{title}</div>
+            <div className="font-semibold dark:text-purple-600">{title}</div>
           </div>
           <div className="flex justify-center items-center">
             <div className="text-gray-500 px-4">
@@ -50,16 +50,8 @@ const Card = ({ title, link, type }: CardProp) => {
           )}
           {/* Extract Last String (sharable string and put it as variable here)  https://www.notion.so/WEEK-15-WEBSOCKETS-1efaca5febfa809db5eccf96b48d931b*/}
           {/* Notion Docs */}
-          {type === "docs" && (
-            <iframe
-              src="https://pickled-grey-842.notion.site/ebd/1efaca5febfa809db5eccf96b48d931b?pvs=4"
-              width="100%"
-              height="400"
-              frameBorder={5}
-              allowFullScreen
-            />
-          )}
         </div>
+      <div className="dark:bg-slate-700 p-2 rounded-lg text-white mt-2 ">Text</div>
       </div>
     </div>
   );

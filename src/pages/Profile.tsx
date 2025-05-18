@@ -2,7 +2,7 @@
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div className="dark:bg-slate-950">Profile</div>
   )
 }
 

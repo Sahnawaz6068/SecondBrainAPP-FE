@@ -7,7 +7,7 @@ import SidebarItem from "./SidebarItem"
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-72 bg-slate-100 shadow-md fixed left-0 top-0 ">
+    <div className="h-screen w-72 bg-slate-100 shadow-md fixed left-0 top-0 dark:bg-slate-950 ">
       {/* Logo */}
       <div className="pl-2 pt-2 flex items-center hover:cursor-pointer ">
           <img className="h-11 w-11 hover:scale-105 duration-200 " src="../../public/Brain.png" alt="Logo" />

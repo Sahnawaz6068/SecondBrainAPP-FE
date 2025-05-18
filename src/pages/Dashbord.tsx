@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 function Dashbord() {
   const [modelOpen, setModelOpen] = useState(false);
   return (
-    <>
+    <div className="h-fit dark:bg-slate-950">
       <Sidebar />
-      <div className="flex justify-end  mr-5 mt-5 ">
+      <div className="flex justify-end  mr-5 pt-5  ">
         <Button
           varient="primary"
           size="lg"
@@ -50,17 +50,13 @@ function Dashbord() {
           </Link>
         </div>
       </div>
-      <div className="flex flex-wrap pt-8 ml-80">
+      <div className="flex w-fit flex-wrap pt-8 ml-80">
         <Card
           title={"Ind vs Pak"}
           link={"https://x.com/mihir___dev/status/1921316447067787661"}
           type={"twitter"}
         />
-        <Card
-          title={"Ind vs Pak"}
-          link={"https://x.com/sierraoperator/status/1921432180821045437"}
-          type={"twitter"}
-        />
+        
         <Card
           title={"Dev vs DSA"}
           link={"https://www.youtube.com/watch?v=-RVMgPK8hAk"}
@@ -78,12 +74,17 @@ function Dashbord() {
           }
           type={"docs"}
         />
+        <Card
+          title={"Ind vs Pak"}
+          link={"https://x.com/sierraoperator/status/1921432180821045437"}
+          type={"twitter"}
+        />
       </div>
       <CreateContentModel
         open={modelOpen}
         onClose={() => setModelOpen(false)}
       />
-    </>
+    </div>
   );
 }
 
