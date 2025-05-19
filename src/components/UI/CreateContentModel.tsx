@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import CloseIcon from "../../icons/CloseIcon";
 import { Button } from "./Button";
 import Input from "./Input";
-import { BACKEND_URL } from "../../config";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 //@ts-ignore
 enum ContentType {
@@ -18,21 +18,42 @@ const CreateContentModel = ({ open, onClose }) => {
   // const [type,setType]=useState(ContentType.YouTube);
   console.log(CreateContentModel);
   console.log(type);
+
+  //cookies                      TOKEN AND ALL THE THING
+
   async function ModelInput() {
     try {
       const title = Title.current?.value;
       const link = Url.current?.value;
 
-      console.log(title, link); //just logging and checking
-      const response = await axios.post(BACKEND_URL + "/content", {
-        title,
-        link,
-        type,
-        
-      });
-      console.log(response); //Promise pending 
-      alert("New content added to Brain");
+      const token = localStorage.getItem("token"); //find token form the local storage
+      console.log("Token de de bahai");
+      console.log(token);
+      if (token) {
+        const decoded = jwtDecode(token);          //decode data from token
+        console.log(decoded);
+        //@ts-ignore
+        const userId = decoded.id;                 //Ectract userId from token
+        console.log(title, link);
+        const response = await axios.post(
+          "http://localhost:3000/api/v1/content",
+          {
+            title,
+            link,
+            type,
+            userId,
+          },
+          {withCredentials: true}
+        );
+        console.log("response hai ye:")
+        console.log(response); //Promise pending
+        alert("New content added to Brain");
+      } else {
+        console.log("Dekhiye aap Token Le ke aaye");
+      }
+      onClose();
     } catch (err: any) {
+      console.log("Locha ho gay in creatinf ne content")
       console.log(err.message);
     }
   }
@@ -48,7 +69,9 @@ const CreateContentModel = ({ open, onClose }) => {
                 className="hover:bg-slate-300 rounded-sm"
                 onClick={() => onClose()}
               >
-                <CloseIcon />
+                <div className="text-gray-600">
+                  <CloseIcon />
+                </div>
               </div>
             </div>
             <div className="mb-2">

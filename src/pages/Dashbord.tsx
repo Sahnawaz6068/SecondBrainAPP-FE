@@ -3,26 +3,47 @@ import { PlusIcon } from "../icons/PlusIcon";
 import { Share } from "../icons/Share";
 import Card from "../components/UI/Card";
 import CreateContentModel from "../components/UI/CreateContentModel";
-import { useState } from "react";
+import {  useEffect, useState } from "react";
 import Sidebar from "../components/UI/Sidebar";
 import { Link } from "react-router-dom";
+import axios from "axios";
+// import UserIdFn from "../util";
 function Dashbord() {
   const [modelOpen, setModelOpen] = useState(false);
+  let response=[1];
+  // const userId=UserIdFn();
+  // console.log("__________________"+userId);
+  useEffect(() => {
+    FetchData();
+  }, []);
+ async function FetchData() {
+    try {
+       response = await axios.get("http://localhost:3000/api/v1/content",
+        {
+          // userId:userId,
+        withCredentials:true}
+      );
+      console.log(response);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
+
   return (
-    <div className="h-fit dark:bg-slate-950">
+    <div className="h-fit dark:bg-[#0f0f1a]">
+      {/* SIDE BAR */}
       <Sidebar />
       <div className="flex justify-end  mr-5 pt-5  ">
-        <Button
-          varient="primary"
+        {/* sHARE bRAIN */}
+        <Button varient="primary"
           size="lg"
           startIcon={<Share size="lg" />}
           endIcon="lala2"
           text="Share Brain"
           onClick={() => {}}
         />
-
-        <Button
-          varient="secondary"
+        {/* ADD  CONTENT BUTTON */}
+        <Button varient="secondary"
           size="sm"
           startIcon={<PlusIcon size="md" />}
           endIcon="lala2"
@@ -31,6 +52,7 @@ function Dashbord() {
             setModelOpen(true);
           }}
         />
+        {/* USER PROFILE */}
         <div className=" rounded-full self-center">
           <Link to="/profile">
             <svg
@@ -52,31 +74,8 @@ function Dashbord() {
       </div>
       <div className="flex w-fit flex-wrap pt-8 ml-80">
         <Card
-          title={"Ind vs Pak"}
+          title={"response.data.title"}
           link={"https://x.com/mihir___dev/status/1921316447067787661"}
-          type={"twitter"}
-        />
-        
-        <Card
-          title={"Dev vs DSA"}
-          link={"https://www.youtube.com/watch?v=-RVMgPK8hAk"}
-          type={"youtube"}
-        ></Card>
-        <Card
-          title={"Dev vs DSA"}
-          link={"https://www.youtube.com/watch?v=-RVMgPK8hAk"}
-          type={"youtube"}
-        ></Card>
-        <Card
-          title={"WebSocket"}
-          link={
-            "https://www.notion.so/WEEK-15-WEBSOCKETS-1efaca5febfa809db5eccf96b48d931b"
-          }
-          type={"docs"}
-        />
-        <Card
-          title={"Ind vs Pak"}
-          link={"https://x.com/sierraoperator/status/1921432180821045437"}
           type={"twitter"}
         />
       </div>

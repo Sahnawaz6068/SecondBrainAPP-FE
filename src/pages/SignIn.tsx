@@ -2,34 +2,36 @@ import Input from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 import { useRef } from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
-import { Link } from "react-router-dom";
+// import { BACKEND_URL } from "../config";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const Email = useRef<HTMLInputElement>(null);
   const Password = useRef<HTMLInputElement>(null);
+  const navigate=useNavigate();
 
   async function signInData() {
     const email = Email.current?.value;
     const password = Password.current?.value;
     try {
       const response = await axios.post(
-        BACKEND_URL + "/login",
-        { email, password }, // request body
-        { withCredentials: true } // axios config
+        "http://localhost:3000/api/v1/login", 
+        { email, password },
+        { withCredentials: true }
       );
       console.log(response?.data.token);
       const jwt = response.data.token;
       // localStorage.setItem("token", jwt);
       localStorage.setItem("token", jwt);
       alert("You are LoggedIn");
+      navigate("/");
     } catch (err: any) {
       console.log(err.message);
     }
   }
 
   return (
-    <div className="flex dark:bg-slate-950 ">
+    <div className="flex dark:bg-[#0f0f1a] ">
       <div>
         <img
           className="mt-32 ml-10 hidden dark:block rounded-lg hover:scale-105 duration-300 "

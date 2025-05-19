@@ -1,9 +1,9 @@
 import Input from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 import { useRef } from "react";
-import { BACKEND_URL } from "../config";
+// import { BACKEND_URL } from "../config";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   //use ref to fetch data from input box
@@ -12,6 +12,8 @@ const SignUp = () => {
   const LastName = useRef<HTMLInputElement>(null);
   const Email = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate=useNavigate();
+
   async function signupData() {
     const firstName = FirstName.current?.value;
     const lastName = LastName.current?.value;
@@ -19,19 +21,23 @@ const SignUp = () => {
     const password = passwordRef.current?.value;
 
     try {
-      await axios.post(BACKEND_URL + "/signup", {
+      const response=await axios.post("http://localhost:3000/api/v1/signup", {
         firstName,
         lastName,
         email,
         password,
-      });
+      },
+      {withCredentials:true}
+    );
+      console.log(response);
       alert("You are signUp");
+      navigate("/signin");
     } catch (err: any) {
       console.log(err.message);
     }
   }
   return (
-    <div className="flex dark:bg-slate-950 ">
+    <div className="flex dark:bg-[#0f0f1a] ">
       <div>
         <img
         className="mt-32 ml-10 hidden dark:block rounded-lg hover:scale-105 duration-300 "

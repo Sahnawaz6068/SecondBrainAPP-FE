@@ -10,8 +10,8 @@ interface ButtonProp {
 }
 
 const VarientStyle = {
-  primary: "bg-blue-200 text-purple-800 hover:cursor-pointer hover:bg-blue-300",
-  secondary: "bg-blue-700 text-white hover:cursor-pointer hover:bg-blue-600",
+  primary: "bg-blue-200 text-purple-800 hover:cursor-pointer hover:bg-blue-300 ",
+  secondary: "bg-blue-700 text-white hover:cursor-pointer hover:bg-blue-600 dark:bg-purple-700 dark:hover:bg-purple-500",
 };
 
 const sizeStyle = {
