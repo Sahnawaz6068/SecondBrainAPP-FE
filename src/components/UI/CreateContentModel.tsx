@@ -33,7 +33,7 @@ const CreateContentModel = ({ open, onClose }) => {
         const decoded = jwtDecode(token);          //decode data from token
         console.log(decoded);
         //@ts-ignore
-        const userId = decoded.id;                 //Ectract userId from token
+        const userId = decoded.id;                 //Exctract userId from token
         console.log(title, link);
         const response = await axios.post(
           "http://localhost:3000/api/v1/content",

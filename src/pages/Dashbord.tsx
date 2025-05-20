@@ -3,39 +3,53 @@ import { PlusIcon } from "../icons/PlusIcon";
 import { Share } from "../icons/Share";
 import Card from "../components/UI/Card";
 import CreateContentModel from "../components/UI/CreateContentModel";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/UI/Sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import UserIdFn from "../util";
 function Dashbord() {
   const [modelOpen, setModelOpen] = useState(false);
-  let response=[1];
+  const navigate = useNavigate();
+  const [content, setContent] = useState([]);
+  const [allContent,setAllContent]=useState([]);
+
+  let response = [1];
   // const userId=UserIdFn();
   // console.log("__________________"+userId);
   useEffect(() => {
     FetchData();
   }, []);
- async function FetchData() {
+  async function FetchData() {
     try {
-       response = await axios.get("http://localhost:3000/api/v1/content",
-        {
-          // userId:userId,
-        withCredentials:true}
-      );
-      console.log(response);
+      response = await axios.get("http://localhost:3000/api/v1/content", {
+        // userId:userId,
+        withCredentials: true,
+      });
+      //@ts-ignore
+      const data = response.data;
+      console.log("mai AA raha hu matlab token mil gaya hai");
+      console.log(data);
+      setContent(data);
+      setAllContent(data);
     } catch (err: any) {
+      console.log("nahi chala mai, login page lo Token banao fir maje karo");
       console.log(err.message);
+      navigate("/signin");
     }
   }
-
+  //Just check that State Variable got data or not 
+  // console.log("mai tu content hu na bahi");
+  // console.log(content);
   return (
-    <div className="h-fit dark:bg-[#0f0f1a]">
-      {/* SIDE BAR */}
-      <Sidebar />
+    <div className="h-full pb-96 dark:bg-[#0f0f1a]">
+      <div className="dark:bg-[#0f0f1a]">
+        {/* SIDE BAR */}
+      <Sidebar allContent={allContent} setContent={setContent}  />
       <div className="flex justify-end  mr-5 pt-5  ">
         {/* sHARE bRAIN */}
-        <Button varient="primary"
+        <Button
+          varient="primary"
           size="lg"
           startIcon={<Share size="lg" />}
           endIcon="lala2"
@@ -43,7 +57,8 @@ function Dashbord() {
           onClick={() => {}}
         />
         {/* ADD  CONTENT BUTTON */}
-        <Button varient="secondary"
+        <Button
+          varient="secondary"
           size="sm"
           startIcon={<PlusIcon size="md" />}
           endIcon="lala2"
@@ -72,17 +87,20 @@ function Dashbord() {
           </Link>
         </div>
       </div>
+
+      {/* The Reuseable code is here. */}
+
       <div className="flex w-fit flex-wrap pt-8 ml-80">
-        <Card
-          title={"response.data.title"}
-          link={"https://x.com/mihir___dev/status/1921316447067787661"}
-          type={"twitter"}
-        />
+        {content.map((item)=>(
+          //@ts-ignore
+          <Card key={item._id} title={item.title} link={item.link} type={item.type} />
+        ))}
       </div>
       <CreateContentModel
         open={modelOpen}
         onClose={() => setModelOpen(false)}
       />
+      </div>
     </div>
   );
 }
