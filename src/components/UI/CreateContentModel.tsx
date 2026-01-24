@@ -4,11 +4,13 @@ import { Button } from "./Button";
 import Input from "./Input";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
 
 //@ts-ignore
 enum ContentType {
   YouTube = "youtube",
   Twitter = "twitter",
+  LinkedIn = "linkedin",
 }
 //@ts-ignore
 const CreateContentModel = ({ open, onClose }) => {
@@ -22,39 +24,42 @@ const CreateContentModel = ({ open, onClose }) => {
   //cookies                      TOKEN AND ALL THE THING
 
   async function ModelInput() {
-    try {
-      const title = Title.current?.value;
-      const link = Url.current?.value;
+    const title = Title.current?.value?.trim();
+    const link = Url.current?.value?.trim();
 
-      const token = localStorage.getItem("token"); //find token form the local storage
-      console.log("Token de de bahai");
-      console.log(token);
-      if (token) {
-        const decoded = jwtDecode(token);          //decode data from token
-        console.log(decoded);
-        //@ts-ignore
-        const userId = decoded.id;                 //Exctract userId from token
-        console.log(title, link);
-        const response = await axios.post(
-          "http://localhost:3000/api/v1/content",
-          {
-            title,
-            link,
-            type,
-            userId,
-          },
-          {withCredentials: true}
-        );
-        console.log("response hai ye:")
-        console.log(response); //Promise pending
-        alert("New content added to Brain");
-      } else {
-        console.log("Dekhiye aap Token Le ke aaye");
-      }
+    if (!title || !link) {
+      toast.error("Title and URL are required");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Login required");
+      return;
+    }
+
+    //@ts-ignore
+    const userId = jwtDecode(token).id;
+
+    const req = axios.post(
+      "http://localhost:3000/api/v1/content",
+      { title, link, type, userId },
+      { withCredentials: true },
+    );
+
+    toast.promise(req, {
+      loading: "Creating content...",
+      success: "Content created",
+      error: (err) =>
+        err?.response?.data?.message || "Failed to create content",
+    });
+
+    try {
+      await req;
       onClose();
-    } catch (err: any) {
-      console.log("Locha ho gay in creatinf ne content")
-      console.log(err.message);
+    } catch (err) {
+      // toast.promise already shows error
+      console.error(err);
     }
   }
 

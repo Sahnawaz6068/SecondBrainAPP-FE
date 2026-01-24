@@ -2,31 +2,46 @@ import Input from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 import { useRef } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 // import { BACKEND_URL } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const Email = useRef<HTMLInputElement>(null);
   const Password = useRef<HTMLInputElement>(null);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   async function signInData() {
-    const email = Email.current?.value;
+    const email = Email.current?.value?.trim();
     const password = Password.current?.value;
+
+    if (!email || !password) {
+      toast.error("Email and password are required");
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/login", 
+      const req = axios.post(
+        "http://localhost:3000/api/v1/login",
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
-      console.log(response?.data.token);
-      const jwt = response.data.token;
-      // localStorage.setItem("token", jwt);
-      localStorage.setItem("token", jwt);
-      alert("You are LoggedIn");
+
+      toast.promise(req, {
+        loading: "Signing in...",
+        success: "Signed in successfully",
+        error: (err) => err?.response?.data?.message || "Signin failed",
+      });
+
+      const response = await req;
+
+      const jwt = response.data?.token;
+      if (jwt) localStorage.setItem("token", jwt); // consider removing (see note below)
+
       navigate("/");
-    } catch (err: any) {
-      console.log(err.message);
+    } catch (err) {
+      // toast already handled by toast.promise, so optional:
+      console.error(err);
     }
   }
 

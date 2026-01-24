@@ -44,7 +44,7 @@ function Dashbord() {
   return (
     <div className="h-full pb-96 dark:bg-[#0f0f1a]">
       <div className="dark:bg-[#0f0f1a]">
-        {/* SIDE BAR */}
+        {/* Sde buttons */}
       <Sidebar allContent={allContent} setContent={setContent}  />
       <div className="flex justify-end  mr-5 pt-5  ">
         {/* sHARE bRAIN */}
@@ -56,7 +56,6 @@ function Dashbord() {
           text="Share Brain"
           onClick={() => {}}
         />
-        {/* ADD  CONTENT BUTTON */}
         <Button
           varient="secondary"
           size="sm"
@@ -67,7 +66,7 @@ function Dashbord() {
             setModelOpen(true);
           }}
         />
-        {/* USER PROFILE */}
+       
         <div className=" rounded-full self-center">
           <Link to="/profile">
             <svg
@@ -87,8 +86,6 @@ function Dashbord() {
           </Link>
         </div>
       </div>
-
-      {/* The Reuseable code is here. */}
 
       <div className="flex w-fit flex-wrap pt-8 ml-80">
         {content.map((item)=>(

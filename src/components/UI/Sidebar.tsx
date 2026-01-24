@@ -8,7 +8,10 @@ const Sidebar = ({ allContent, setContent }) => {
   return (
     <div className="h-screen w-72 bg-slate-100 shadow-md fixed left-0 top-0 dark:bg-slate-950 ">
       {/* Logo */}
-      <div className="pl-2 pt-2 flex items-center hover:cursor-pointer ">
+      <div
+        onClick={() => window.location.reload()}
+        className="pl-2 pt-2 flex items-center hover:cursor-pointer "
+      >
         <img
           className="h-11 w-11 hover:scale-105 duration-200 "
           src="../../public/Brain.png"
@@ -20,19 +23,19 @@ const Sidebar = ({ allContent, setContent }) => {
       </div>
       <SidebarItem
         allContent={allContent}
-        setContent={setContent} 
+        setContent={setContent}
         text={"Docs"}
         icon={<Docs2 />}
       />
       <SidebarItem
         allContent={allContent}
-        setContent={setContent} 
+        setContent={setContent}
         text={"Twitter"}
         icon={<TwitterIcon />}
       />
       <SidebarItem
         allContent={allContent}
-        setContent={setContent} 
+        setContent={setContent}
         text={"Youtube"}
         icon={<YoutubeIcon />}
       />

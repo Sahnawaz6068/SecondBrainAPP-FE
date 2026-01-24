@@ -7,6 +7,17 @@ interface CardProp {
   type: String;
 }
 
+
+function getYoutubeEmbed(link) {
+
+  if (link.includes("watch?v=")) {
+    const videoId = link.split("watch?v=")[1].split("&")[0];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  return "";
+}
+
 const Card = ({ title, link, type }: CardProp) => {
   useEffect(() => {
   const script = document.createElement("script");
@@ -45,7 +56,7 @@ const Card = ({ title, link, type }: CardProp) => {
           {type === "youtube" && (
             <iframe
               className="w-full"
-              src={link.replace("watch?v=", "embed/")}
+              src={getYoutubeEmbed(link)}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
