@@ -35,24 +35,18 @@ const Card = ({ title, link, type }: CardProp) => {
         {/* CARD Header Section */}
         <div className="flex justify-between">
           <div className="flex justify-center items-ce4nter ">
-            <div className="text-gray-500 pr-4">
-              <Share size="lg" />
-            </div>
+            
             <div className="font-semibold dark:text-purple-600">{title}</div>
           </div>
           <div className="flex justify-center items-center">
-            <div className="text-gray-500 px-4">
-              <Share size="lg" />
-            </div>
+            
             <div className="text-gray-500 pr-2">
               <Share size="lg" />
             </div>
           </div>
         </div>
 
-        {/* CARD CONTENT RENDERING SECTION */}
         <div className="pt-4">
-          {/* Youtube rendering https://www.youtube.com/watch?v=-RVMgPK8hAk */}
           {type === "youtube" && (
             <iframe
               className="w-full"
@@ -65,17 +59,14 @@ const Card = ({ title, link, type }: CardProp) => {
             ></iframe>
           )}
 
-          {/* Twitter Rendering Section */}
           {type === "twitter" && (
             <blockquote className="twitter-tweet">
               <a href={link.replace("x.com", "twitter.com")}></a>
             </blockquote>
           )}
-
-          {/* Extract Last String (sharable string and put it as variable here)  https://www.notion.so/WEEK-15-WEBSOCKETS-1efaca5febfa809db5eccf96b48d931b*/}
           {/* Notion Docs */}
+          {/* LinkedIn Embade */}
         </div>
-        {/* <div className="dark:bg-slate-700 p-2 rounded-lg text-white mt-2 ">Text</div> */}
       </div>
     </div>
   );
