@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-
 import { Button } from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import CreateContentModel from "../components/UI/CreateContentModel";
@@ -22,6 +21,7 @@ function Dashbord() {
   const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState<ContentItem[]>([]);
   const [allContent, setAllContent] = useState<ContentItem[]>([]);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -119,6 +119,7 @@ const handleShareBrain = async () => {
               title={item.title}
               link={item.link}
               type={item.type}
+              id = {item._id}
             />
           ))}
         </div>

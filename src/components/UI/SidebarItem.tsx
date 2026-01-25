@@ -3,8 +3,8 @@ import { useEffect } from "react";
 interface Sidebar {
   text: string;
   icon: ReactElement;
-  allContent: Array<any>; // or a more specific type
-  setContent: (value: any[]) => void; // match the type of content
+  allContent: Array<any>; 
+  setContent: (value: any[]) => void; 
 }
 
 const SidebarItem = ({ text, icon, allContent, setContent }: Sidebar) => {
@@ -15,8 +15,6 @@ const SidebarItem = ({ text, icon, allContent, setContent }: Sidebar) => {
       //@ts-ignore
       window.twttr.widgets.load();
     }
-
-    // Optionally re-render YouTube embeds (usually not needed)
   }, [allContent]);
 
   function filter() {

@@ -3,7 +3,6 @@ import { Button } from "../components/UI/Button";
 import { useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-// import { BACKEND_URL } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -36,11 +35,10 @@ const SignIn = () => {
       const response = await req;
 
       const jwt = response.data?.token;
-      if (jwt) localStorage.setItem("token", jwt); // consider removing (see note below)
+      if (jwt) localStorage.setItem("token", jwt); 
 
       navigate("/");
     } catch (err) {
-      // toast already handled by toast.promise, so optional:
       console.error(err);
     }
   }

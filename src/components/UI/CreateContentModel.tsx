@@ -11,6 +11,7 @@ enum ContentType {
   YouTube = "youtube",
   Twitter = "twitter",
   LinkedIn = "linkedin",
+  Docs = "docs",
 }
 //@ts-ignore
 const CreateContentModel = ({ open, onClose }) => {
@@ -102,6 +103,14 @@ const CreateContentModel = ({ open, onClose }) => {
                 }}
                 text={"Twitter"}
                 varient={type === ContentType.Twitter ? "secondary" : "primary"}
+                size="md"
+              ></Button>
+              <Button
+                onClick={() => {
+                  setType(ContentType.Docs);
+                }}
+                text={"docs"}
+                varient={type === ContentType.Docs ? "secondary" : "primary"}
                 size="md"
               ></Button>
             </div>

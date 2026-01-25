@@ -1,4 +1,4 @@
-// src/pages/SharedBrain.tsx
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -28,12 +28,9 @@ function SharedBrain() {
     try {
       setLoading(true);
       setError("");
-
-      // IMPORTANT: adjust this URL to your backend route for fetching shared content by hash
-      // Example (common): GET /api/v1/brain/:hash
       const res = await axios.get<{ content: ContentItem[] }>(
         `http://localhost:3000/api/v1/brain/${hashValue}`,
-        { withCredentials: true } // remove if your public share should not need cookies
+        { withCredentials: true } 
       );
 
       setContent(res.data?.content ?? []);
