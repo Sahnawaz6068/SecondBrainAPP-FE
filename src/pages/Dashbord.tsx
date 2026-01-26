@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-
 import { Button } from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import CreateContentModel from "../components/UI/CreateContentModel";
@@ -21,7 +20,6 @@ function Dashbord() {
   const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState<ContentItem[]>([]);
   const [allContent, setAllContent] = useState<ContentItem[]>([]);
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +30,7 @@ function Dashbord() {
     try {
       const response = await axios.get<{ content: ContentItem[] }>(
         "http://localhost:3000/api/v1/content",
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       const items = response.data?.content ?? [];
@@ -44,36 +42,37 @@ function Dashbord() {
     }
   };
 
-const handleShareBrain = async () => {
-  try {
-    const res = await axios.post(
-      "http://localhost:3000/api/v1/brain/share",
-      { share: true },
-      { withCredentials: true }
-    );
+  const handleShareBrain = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/brain/share",
+        { share: true },
+        { withCredentials: true },
+      );
 
-    const hash = res.data?.hash;
-    if (!hash) {
-      toast.error("No hash returned from server");
-      return;
+      const hash = res.data?.hash;
+      if (!hash) {
+        toast.error("No hash returned from server");
+        return;
+      }
+
+      const shareUrl = `${window.location.origin}/share/${hash}`;
+      await navigator.clipboard.writeText(shareUrl);
+
+      toast.success("Link copied!", { duration: 2500 });
+    } catch (err: any) {
+      console.log(err?.response?.data || err?.message);
+      toast.error("Failed to generate share link");
     }
-
-    const shareUrl = `${window.location.origin}/share/${hash}`;
-    await navigator.clipboard.writeText(shareUrl);
-
-    toast.success("Link copied!", { duration: 2500 });
-
-  } catch (err: any) {
-    console.log(err?.response?.data || err?.message);
-    toast.error("Failed to generate share link");
-  }
-};
+  };
+  
   return (
     <div className="h-full pb-96 dark:bg-[#0f0f1a]">
       <div className="dark:bg-[#0f0f1a]">
         <Sidebar allContent={allContent} setContent={setContent} />
 
         <div className="flex justify-end mr-5 pt-5">
+
           <Button
             varient="primary"
             size="lg"
@@ -119,7 +118,7 @@ const handleShareBrain = async () => {
               title={item.title}
               link={item.link}
               type={item.type}
-              id = {item._id}
+              id={item._id}
             />
           ))}
         </div>

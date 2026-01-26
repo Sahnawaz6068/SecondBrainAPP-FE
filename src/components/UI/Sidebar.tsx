@@ -1,23 +1,12 @@
+import { useState } from "react";
 import Docs2 from "../../icons/Docs2";
 import { TwitterIcon } from "../../icons/TwitterIcon";
 import YoutubeIcon from "../../icons/YoutubeIcon";
 import SidebarItem from "./SidebarItem";
-import { useMemo, useState } from "react";
 
 //@ts-ignore
 const Sidebar = ({ allContent, setContent }) => {
   const [query, setQuery] = useState(""); 
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return allContent;
-
-    return (allContent || []).filter((c: any) =>
-      String(c?.title ?? "")
-        .toLowerCase()
-        .includes(q),
-    );
-  }, [allContent, query]); 
 
   return (
     <div className="h-screen w-72 bg-slate-100 shadow-md fixed left-0 top-0 dark:bg-slate-950 ">
