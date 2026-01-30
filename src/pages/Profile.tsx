@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Button } from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 type User = {
   _id: string;
@@ -20,7 +21,7 @@ const Profile = () => {
     try {
       setLoading(true);
 
-      const req = axios.get("http://localhost:3000/api/v1/me", {
+      const req = axios.get( `${API_BASE_URL}/me`, {
         withCredentials: true,
       });
 
@@ -34,20 +35,35 @@ const Profile = () => {
       setUser(res.data.user);
     } catch (err) {
       console.error(err);
+      navigate("/signin");
     } finally {
       setLoading(false);
     }
   }
 
-  async function logout() {
-    try {
-      localStorage.removeItem("token");
-      toast.success("Logged out");
-      navigate("/signin");
-    } catch (e) {
-      toast.error("Logout failed");
-    }
+async function logout() {
+  try {
+    const req = axios.post(
+       `${API_BASE_URL}/logout`,
+      {},
+      { withCredentials: true }
+    );
+
+    toast.promise(req, {
+      loading: "Logging out...",
+      success: "Logged out",
+      error: (err) => err?.response?.data?.msg || "Logout failed",
+    });
+
+    await req;
+
+    setUser(null);
+    navigate("/signin");
+  } catch (e) {
+    console.log(e)
   }
+}
+
 
   useEffect(() => {
     getMe();

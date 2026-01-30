@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Card from "../components/UI/Card";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 type ContentItem = {
   _id: string;
@@ -29,7 +30,7 @@ function SharedBrain() {
       setLoading(true);
       setError("");
       const res = await axios.get<{ content: ContentItem[] }>(
-        `http://localhost:3000/api/v1/brain/${hashValue}`,
+        `${API_BASE_URL}/brain/${hashValue}`,
         { withCredentials: true } 
       );
 
@@ -82,6 +83,7 @@ function SharedBrain() {
               title={item.title}
               link={item.link}
               type={item.type}
+              id={item._id}
             />
           ))}
         </div>

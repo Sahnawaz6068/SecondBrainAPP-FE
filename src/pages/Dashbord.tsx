@@ -8,6 +8,9 @@ import CreateContentModel from "../components/UI/CreateContentModel";
 import Sidebar from "../components/UI/Sidebar";
 import { PlusIcon } from "../icons/PlusIcon";
 import { Share } from "../icons/Share";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 
 type ContentItem = {
   _id: string;
@@ -29,7 +32,7 @@ function Dashbord() {
   const fetchData = async () => {
     try {
       const response = await axios.get<{ content: ContentItem[] }>(
-        "http://localhost:3000/api/v1/content",
+        `${API_BASE_URL}/content`,
         { withCredentials: true },
       );
 
@@ -45,14 +48,14 @@ function Dashbord() {
   const handleShareBrain = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v1/brain/share",
+        `${API_BASE_URL}/brain/share`,
         { share: true },
         { withCredentials: true },
       );
 
       const hash = res.data?.hash;
       if (!hash) {
-        toast.error("No hash returned from server");
+        toast.error("No hash got");
         return;
       }
 
@@ -62,7 +65,7 @@ function Dashbord() {
       toast.success("Link copied!", { duration: 2500 });
     } catch (err: any) {
       console.log(err?.response?.data || err?.message);
-      toast.error("Failed to generate share link");
+      toast.error("Failed to generate");
     }
   };
   

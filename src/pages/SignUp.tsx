@@ -1,14 +1,13 @@
 import Input from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 import { useRef } from "react";
-// import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const SignUp = () => {
-  //use ref to fetch data from input box
-
   const FirstName = useRef<HTMLInputElement>(null);
   const LastName = useRef<HTMLInputElement>(null);
   const Email = useRef<HTMLInputElement>(null);
@@ -23,7 +22,7 @@ const SignUp = () => {
 
     try {
       const req = axios.post(
-        "http://localhost:3000/api/v1/signup",
+         `${API_BASE_URL}/signup`,
         { firstName, lastName, email, password },
         { withCredentials: true },
       );

@@ -4,6 +4,8 @@ import { useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const SignIn = () => {
   const Email = useRef<HTMLInputElement>(null);
@@ -21,7 +23,7 @@ const SignIn = () => {
 
     try {
       const req = axios.post(
-        "http://localhost:3000/api/v1/login",
+         `${API_BASE_URL}/login`,
         { email, password },
         { withCredentials: true },
       );

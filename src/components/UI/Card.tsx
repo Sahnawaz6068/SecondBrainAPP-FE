@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 interface CardProp {
-  title: String;
-  link: String;
-  type: String;
-  id: String;
+  title: string;
+  link: string;
+  type: string;
+  id: string;
 }
 
 async function handleDelete(contentId: string) {
@@ -29,7 +29,7 @@ async function handleDelete(contentId: string) {
   }
 }
 
-function getYoutubeEmbed(link) {
+function getYoutubeEmbed(link:any) {
   if (link.includes("watch?v=")) {
     const videoId = link.split("watch?v=")[1].split("&")[0];
     return `https://www.youtube.com/embed/${videoId}`;
@@ -37,6 +37,7 @@ function getYoutubeEmbed(link) {
 
   return "";
 }
+
 
 const Card = ({ title, link, type, id }: CardProp) => {
   useEffect(() => {
@@ -52,7 +53,6 @@ const Card = ({ title, link, type, id }: CardProp) => {
   return (
     <div className="px-2 pt-2 ml-8 mt-2 hover:cursor-pointer  hover:transition  duration-400 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:bg-indigo-100 dark:hover:bg-slate-700 ">
       <div className="bg-white py-4 px-4 rounded-md shadow-md border-slate-100 border max-w-72 min-h-52 min-w-72 dark:bg-slate-900 dark:border-slate-600 ">
-        {/* CARD Header Section */}
         <div className="flex justify-between">
           <div className="flex justify-center items-ce4nter ">
             <div className="font-semibold dark:text-purple-600">{title}</div>
@@ -77,7 +77,6 @@ const Card = ({ title, link, type, id }: CardProp) => {
               className="w-full"
               src={getYoutubeEmbed(link)}
               title="YouTube video player"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
@@ -89,7 +88,6 @@ const Card = ({ title, link, type, id }: CardProp) => {
               <a href={link.replace("x.com", "twitter.com")}></a>
             </blockquote>
           )}
-          {/* Notion Docs */}
           {type === "docs" && (
             <iframe
               src={link
@@ -97,12 +95,10 @@ const Card = ({ title, link, type, id }: CardProp) => {
                 .replace("notion.site/", "notion.site/ebd/")}
               width="100%"
               height="400"
-              frameBorder={0}
               allowFullScreen
             />
           )}
 
-          {/* LinkedIn Embade */}
         </div>
       </div>
     </div>
