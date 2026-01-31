@@ -31,17 +31,44 @@ function Dashbord() {
     fetchData();
   }, [page,limit]);
 
-  const fetchData = async () => {
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get<{ content: ContentItem[] }>(
+  //       `${API_BASE_URL}content/paginated?page=3&limit=5`,
+  //       { withCredentials: true },
+  //     );
+  //     console.log("...............................................");
+  //     console.log(response);
+  //     const items = response.data?.content ?? [];
+  //     setContent(items);
+  //     setAllContent(items);
+  //   } catch (err: any) {
+  //     console.log(err?.message);
+  //     // navigate("/signin");
+  //   }
+  // };
+
+    const fetchData = async () => {
     try {
       const response = await axios.get<{ content: ContentItem[] }>(
-        `${API_BASE_URL}content/paginated?page=3&limit=5`,
-        { withCredentials: true },
+        `${API_BASE_URL}content/paginated`,
+        {
+          params:{
+            page,
+            limit
+          },
+          
+          withCredentials: true },
       );
-      console.log("...............................................");
+      console.log(".........................................");
       console.log(response);
-      const items = response.data?.content ?? [];
+      // response.data?.content??[];
+      const items =  response.data?.content??[];
       setContent(items);
       setAllContent(items);
+
+      // setTotalPages(response)
+     
     } catch (err: any) {
       console.log(err?.message);
       // navigate("/signin");
@@ -78,9 +105,10 @@ function Dashbord() {
         <Sidebar allContent={allContent} setContent={setContent} />
 
         <div className="flex justify-end mr-5 pt-5">
+          {/* //Drop down */}
           <div className="bg-white">
             <select value= {limit}
-              onChange = {(e:any)=> {
+              onChange = {(e)=> {
                 const value = e.target.value;
                 setPage(1)
                 setLimit(value== "all"?"all":Number(value))
@@ -142,12 +170,8 @@ function Dashbord() {
           ))}
         </div>
 
-        <CreateContentModel
-          open={modelOpen}
-          onClose={() => setModelOpen(false)}
-        />
-        {/* //Pagination thing */}
-        <div>
+          {/* //Pagination thing */}
+        <div className="mt-6 flex gap-4">
           <Button
          varient="secondary"
           size="sm"
@@ -159,8 +183,13 @@ function Dashbord() {
           size="sm"
           text="Next" 
           onClick={()=>setPage((p)=>Math.min(p+1,totalPages))}/>
-
         </div>
+
+        <CreateContentModel
+          open={modelOpen}
+          onClose={() => setModelOpen(false)}
+        />
+      
       </div>
     </div>
   );
