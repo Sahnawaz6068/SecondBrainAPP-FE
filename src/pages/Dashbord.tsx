@@ -10,8 +10,6 @@ import { PlusIcon } from "../icons/PlusIcon";
 import { Share } from "../icons/Share";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
-
 type ContentItem = {
   _id: string;
   title: string;
@@ -20,6 +18,10 @@ type ContentItem = {
 };
 
 function Dashbord() {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState<number | "all">(5);
+  const [totalPages, setTotalPages] = useState(1);
+
   const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState<ContentItem[]>([]);
   const [allContent, setAllContent] = useState<ContentItem[]>([]);
@@ -27,21 +29,22 @@ function Dashbord() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page,limit]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get<{ content: ContentItem[] }>(
-        `${API_BASE_URL}/content`,
+        `${API_BASE_URL}content/paginated?page=3&limit=5`,
         { withCredentials: true },
       );
-
+      console.log("...............................................");
+      console.log(response);
       const items = response.data?.content ?? [];
       setContent(items);
       setAllContent(items);
     } catch (err: any) {
       console.log(err?.message);
-      navigate("/signin");
+      // navigate("/signin");
     }
   };
 
@@ -68,14 +71,27 @@ function Dashbord() {
       toast.error("Failed to generate");
     }
   };
-  
+
   return (
     <div className="h-full pb-96 dark:bg-[#0f0f1a]">
       <div className="dark:bg-[#0f0f1a]">
         <Sidebar allContent={allContent} setContent={setContent} />
 
         <div className="flex justify-end mr-5 pt-5">
-
+          <div className="bg-white">
+            <select value= {limit}
+              onChange = {(e:any)=> {
+                const value = e.target.value;
+                setPage(1)
+                setLimit(value== "all"?"all":Number(value))
+              }}>
+                console.log(value);
+              <option value="{5}">5</option>
+              <option value="{10}">10</option>
+              <option value="{20}">20</option>
+              <option value="all">All</option>
+            </select>
+          </div>
           <Button
             varient="primary"
             size="lg"
@@ -130,6 +146,21 @@ function Dashbord() {
           open={modelOpen}
           onClose={() => setModelOpen(false)}
         />
+        {/* //Pagination thing */}
+        <div>
+          <Button
+         varient="secondary"
+          size="sm"
+          text="Previous"
+           onClick={()=>setPage((p)=>Math.max(p-1,1))}
+          />
+
+          <Button   varient="secondary"
+          size="sm"
+          text="Next" 
+          onClick={()=>setPage((p)=>Math.min(p+1,totalPages))}/>
+
+        </div>
       </div>
     </div>
   );
