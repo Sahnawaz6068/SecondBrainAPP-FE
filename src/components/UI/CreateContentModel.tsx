@@ -5,6 +5,7 @@ import Input from "./Input";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 //@ts-ignore
 enum ContentType {
@@ -39,13 +40,14 @@ const CreateContentModel = ({ open, onClose }) => {
       return;
     }
 
-    //@ts-ignore
-    const userId = jwtDecode(token).id;
-
     const req = axios.post(
-      "http://localhost:3000/api/v1/content",
-      { title, link, type, userId },
-      { withCredentials: true },
+      `${API_BASE_URL}/content`,
+      { title, link, type },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
 
     toast.promise(req, {
@@ -59,7 +61,6 @@ const CreateContentModel = ({ open, onClose }) => {
       await req;
       onClose();
     } catch (err) {
-      // toast.promise already shows error
       console.error(err);
     }
   }

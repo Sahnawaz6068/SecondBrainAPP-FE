@@ -6,26 +6,27 @@ import SidebarItem from "./SidebarItem";
 
 //@ts-ignore
 const Sidebar = ({ allContent, setContent }) => {
-  const [query, setQuery] = useState(""); 
+  const [query, setQuery] = useState("");
 
   return (
-    <div className="h-screen w-72 bg-slate-100 shadow-md fixed left-0 top-0 dark:bg-slate-950 ">
+    <div className="fixed left-0 top-0 z-20 hidden h-screen w-64 flex-col border-r border-slate-200 bg-slate-100 shadow-md dark:border-white/10 dark:bg-slate-950 md:flex">
       {/* Logo */}
       <div
         onClick={() => window.location.reload()}
-        className="pl-2 pt-2 flex items-center hover:cursor-pointer "
+        className="flex items-center gap-3 px-4 py-4 hover:cursor-pointer"
       >
         <img
-          className="h-11 w-11 hover:scale-105 duration-200 "
+          className="h-10 w-10 duration-200 hover:scale-105"
           src="../../public/Brain.png"
           alt="Logo"
         />
-        <div className="font-bold text-2xl pl-4 hover:scale-105 duration-200 text-purple-700 ">
+        <div className="text-xl font-bold text-purple-700 duration-200 hover:scale-105">
           Second Brain
         </div>
       </div>
 
-      <div className="px-3 mt-4">
+      {/* Search */}
+      <div className="px-3 pb-2">
         <input
           value={query}
           onChange={(e) => {
@@ -44,36 +45,39 @@ const Sidebar = ({ allContent, setContent }) => {
             }
           }}
           placeholder="Search by title..."
-          className="w-full px-3 py-2 rounded-md border border-slate-300 bg-white text-slate-900
-                     outline-none focus:ring-2 focus:ring-purple-400
-                     dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
+          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900
+                     outline-none transition-shadow focus:ring-2 focus:ring-purple-400
+                     dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
         />
       </div>
 
-      <SidebarItem
-        allContent={allContent}
-        setContent={setContent}
-        text={"Docs"}
-        icon={<Docs2 />}
-      />
-      <SidebarItem
-        allContent={allContent}
-        setContent={setContent}
-        text={"Twitter"}
-        icon={<TwitterIcon />}
-      />
-      <SidebarItem
-        allContent={allContent}
-        setContent={setContent}
-        text={"Youtube"}
-        icon={<YoutubeIcon />}
-      />
-      {/* <SidebarItem
-        allContent={allContent}
-        setContent={setContent}
-        text={"LinkedIn"}
-        icon={<YoutubeIcon />}
-      /> */}
+      {/* Nav */}
+      <nav className="mt-2 flex flex-col gap-1 px-2">
+        <SidebarItem
+          allContent={allContent}
+          setContent={setContent}
+          text={"Docs"}
+          icon={<Docs2 />}
+        />
+        <SidebarItem
+          allContent={allContent}
+          setContent={setContent}
+          text={"Twitter"}
+          icon={<TwitterIcon />}
+        />
+        <SidebarItem
+          allContent={allContent}
+          setContent={setContent}
+          text={"Youtube"}
+          icon={<YoutubeIcon />}
+        />
+        {/* <SidebarItem
+          allContent={allContent}
+          setContent={setContent}
+          text={"LinkedIn"}
+          icon={<YoutubeIcon />}
+        /> */}
+      </nav>
     </div>
   );
 };

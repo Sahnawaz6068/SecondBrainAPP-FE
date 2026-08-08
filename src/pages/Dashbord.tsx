@@ -15,7 +15,7 @@ type ContentItem = {
   title: string;
   link: string;
   type: string;
-  totalPages : number
+  totalPages: number;
 };
 
 function Dashbord() {
@@ -48,10 +48,11 @@ function Dashbord() {
   //     // navigate("/signin");
   //   }
   // };
-console.log("page...........................................")
+  console.log("page...........................................");
   console.log(page);
-  const fetchData = async () => {
+const fetchData = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get<{ content: ContentItem[] }>(
         `${API_BASE_URL}/content/paginated`,
         {
@@ -59,31 +60,33 @@ console.log("page...........................................")
             page,
             limit,
           },
-
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
-      console.log(".........................................");
-      console.log(response);
-      console.log(response.data.totalPages)
-      // response.data?.content??[];
+
       const items = response.data?.content ?? [];
       setContent(items);
       setAllContent(items);
-
-      setTotalPages(response.data.totalPages)
+      setTotalPages(response.data.totalPages);
     } catch (err: any) {
       console.log(err?.message);
-      // navigate("/signin");
+      navigate("/signin");
     }
   };
 
-  const handleShareBrain = async () => {
+ const handleShareBrain = async () => {
     try {
+      const token = localStorage.getItem("token");
       const res = await axios.post(
         `${API_BASE_URL}/brain/share`,
         { share: true },
-        { withCredentials: true },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
 
       const hash = res.data?.hash;
@@ -107,40 +110,47 @@ console.log("page...........................................")
       <div className="dark:bg-[#0f0f1a]">
         <Sidebar allContent={allContent} setContent={setContent} />
 
-        <div className="flex justify-end mr-5 pt-5">
-          <div className="mt-6 flex gap-4">
-            <Button
-              varient="secondary"
-              size="sm"
-              text="Previous"
-              // disabled ={page==1}
-              onClick={() => setPage((p) => Math.max(p - 1, 1))}
-            />
+ <div className="flex flex-wrap justify-end items-center gap-4 mr-5 pt-5">
+  <div className="mt-6 flex flex-wrap items-center gap-4">
+    <Button
+      varient="secondary"
+      size="sm"
+      text="Previous"
+      disabled={page === 1}
+      onClick={() => setPage((p) => Math.max(p - 1, 1))}
+    />
+    <div className="bg-blue-400 text-white px-4 py-2 rounded-md">
+      {page}
+    </div>
+    <Button
+      varient="secondary"
+      size="sm"
+      text="Next"
+      disabled={page === totalPages}
+      onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+    />
+    <div className="bg-blue-400 text-white px-4 py-2 rounded-md">
+      Total Page: {totalPages}
+    </div>
+  </div>
 
-            <Button
-              varient="secondary"
-              size="sm"
-              text="Next"
-              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-            />
-          </div>
-          {/* //Drop down */}
-          <div className="bg-white">
-            <select
-              value={limit}
-              onChange={(e) => {
-                const value = e.target.value;
-                setPage(1);
-                setLimit(value == "all" ? "all" : Number(value));
-              }}
-            >
-              console.log(value);
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="all">All</option>
-            </select>
-          </div>
+  <div className="bg-white rounded-md">
+    <select
+      className="px-2 py-2 rounded-md outline-none"
+      value={limit}
+      onChange={(e) => {
+        const value = e.target.value;
+        setPage(1);
+        setLimit(value === "all" ? "all" : Number(value));
+      }}
+    >
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="all">All</option>
+    </select>
+  </div>
+
           <Button
             varient="primary"
             size="lg"

@@ -25,13 +25,12 @@ function SharedBrain() {
     fetchSharedBrain(hash);
   }, [hash]);
 
-  const fetchSharedBrain = async (hashValue: string) => {
+const fetchSharedBrain = async (hashValue: string) => {
     try {
       setLoading(true);
       setError("");
       const res = await axios.get<{ content: ContentItem[] }>(
-        `${API_BASE_URL}/brain/${hashValue}`,
-        { withCredentials: true } 
+        `${API_BASE_URL}/brain/${hashValue}`
       );
 
       setContent(res.data?.content ?? []);
@@ -42,7 +41,6 @@ function SharedBrain() {
       setLoading(false);
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-screen dark:bg-[#0f0f1a] p-6">
