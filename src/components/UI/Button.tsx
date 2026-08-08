@@ -7,6 +7,7 @@ interface ButtonProp {
   endIcon?: any;
   text: String;
   onClick?: () => void;
+  disabled?: boolean; 
 }
 
 const VarientStyle = {
@@ -24,8 +25,12 @@ const sizeStyle = {
 export const Button = (props: ButtonProp) => {
   return (
     <div className="mx-2 hover:scale-105 duration-200">
-      <button onClick={props.onClick}
-        className={`${VarientStyle[props.varient]}  ${sizeStyle[props.size]} `}
+      <button
+        onClick={props.onClick}
+        disabled={props.disabled}
+        className={`${VarientStyle[props.varient]} ${sizeStyle[props.size]} ${
+          props.disabled ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       >
         {props.startIcon ? <div className="pr-2">{props.startIcon}</div> : null}{" "}
         {props.text}

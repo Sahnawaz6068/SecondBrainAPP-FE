@@ -53,7 +53,7 @@ function Dashbord() {
 const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get<{ content: ContentItem[] }>(
+      const response = await axios.get<{ content: ContentItem[]; totalPages: number }>(
         `${API_BASE_URL}/content/paginated`,
         {
           params: {

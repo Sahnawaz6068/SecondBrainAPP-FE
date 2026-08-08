@@ -3,7 +3,6 @@ import CloseIcon from "../../icons/CloseIcon";
 import { Button } from "./Button";
 import Input from "./Input";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
